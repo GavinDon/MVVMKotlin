@@ -1,0 +1,52 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-android'
+
+android {
+    compileSdkVersion 28
+
+
+    defaultConfig {
+        minSdkVersion 21
+        targetSdkVersion 28
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation "androidx.core:core-ktx:1.1.0"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    /*  listof("fuel", "fuel-android").foreach {
+          implementation(group = "com.github.kittinunf.fuel", name = it, version = "2.2.0")
+      }*/
+    api "com.github.kittinunf.fuel:fuel:2.2.0"
+    api "com.github.kittinunf.fuel:fuel-android:2.2.0"
+    api "com.github.kittinunf.fuel:fuel-rxjava:2.2.0"
+    api "com.github.kittinunf.fuel:fuel-gson:2.2.0"
+    api "com.github.kittinunf.fuel:fuel-jackson:2.2.0"
+    api 'com.google.code.gson:gson:2.8.6'
+    api 'com.github.kittinunf.fuel:fuel-moshi:2.2.0'
+    api 'com.squareup.moshi:moshi:1.9.2'
+
+
+    /*rxJava-rxAndroid*/
+    api 'io.reactivex.rxjava2:rxjava:2.2.8'
+    api 'io.reactivex.rxjava2:rxandroid:2.1.0'
+}
+repositories {
+    mavenCentral()
+}
