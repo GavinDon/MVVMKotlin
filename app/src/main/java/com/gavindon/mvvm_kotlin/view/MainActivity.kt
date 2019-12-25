@@ -2,9 +2,9 @@ package com.gavindon.mvvm_kotlin.view
 
 import android.os.Bundle
 import androidx.lifecycle.Observer
+import com.gavindon.mvvm_kotlin.R
 import com.gavindon.mvvm_kotlin.base.BaseActivity
 import com.gavindon.mvvm_kotlin.viewmodel.MainViewModel
-import com.gavindon.mvvm_kotlin.R
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : BaseActivity() {

@@ -22,19 +22,24 @@ sealed class Resource<in T> {
         /**
          * 只处理code=0
          */
-        fun <T> create(data: BaseResponse<T>): Resource<T> {
-            val code = data.code
-            return if (code == 0) {
-                val d = data.data ?: ""
-                /*如果返回数据是一个集合判断集合是否为空*/
-                return if (d is List<*> && d.size <= 0) {
-                    EmptySource()
+        fun <T> create(data: BaseResponse<T>?): Resource<T> {
+            if (data == null){
+                return  ErrorSource(data)
+            }else{
+                val code = data.code
+                return if (code == 0) {
+                    val d = data.data ?: ""
+                    /*如果返回数据是一个集合判断集合是否为空*/
+                    return if (d is List<*> && d.size <= 0) {
+                        EmptySource()
+                    } else {
+                        SuccessSource(data.data)
+                    }
                 } else {
-                    SuccessSource(data.data)
+                    ErrorSource(data.data)
                 }
-            } else {
-                ErrorSource(data.data)
             }
+
         }
 
     }

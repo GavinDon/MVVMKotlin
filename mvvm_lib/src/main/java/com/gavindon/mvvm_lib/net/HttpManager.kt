@@ -14,7 +14,7 @@ class HttpManager private constructor() {
 
     var baseUrl: String? = null
     var http: IHttpRequest? = null
-
+    val headers = hashMapOf<String, String>()
 
     /**
      * 提供不同的框架使用
@@ -22,14 +22,24 @@ class HttpManager private constructor() {
      */
     fun initHttp(httpFrame: HttpFrame): HttpManager {
         http = HttpProvider.createHttp(httpFrame)
-
         return this
     }
 
+    /**
+     * 添加请求头
+     */
+    fun addHeader(pair: Pair<String, String>) {
+        headers[pair.first] = pair.second
+    }
+
+    /**
+     * 最后一步调用
+     */
     fun build() {
         if (http is FuelHttp) {
             FuelManager.instance.apply {
                 basePath = baseUrl
+                baseHeaders = headers
                 addRequestInterceptor(LogRequestAsCurlInterceptor)
                 addResponseInterceptor(LogResponseInterceptor)
             }

@@ -1,10 +1,7 @@
 package com.gavindon.mvvm_lib.base
 
-import android.app.Application
-import android.content.Context
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.ViewModel
-import com.gavindon.mvvm_lib.base.my_interface.IViewModel
+import com.gavindon.mvvm_lib.net.http
 
 /**
  * description:
@@ -13,4 +10,8 @@ import com.gavindon.mvvm_lib.base.my_interface.IViewModel
 abstract class MVVMBaseViewModel : ViewModel() {
 
 
+    override fun onCleared() {
+        super.onCleared()
+        http?.compositeDisposable?.clear()
+    }
 }

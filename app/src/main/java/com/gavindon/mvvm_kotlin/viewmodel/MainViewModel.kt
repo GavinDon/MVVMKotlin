@@ -2,9 +2,9 @@ package com.gavindon.mvvm_kotlin.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import com.gavindon.mvvm_kotlin.bean.LoginResp
-import com.gavindon.mvvm_kotlin.repostory.MainRepostory
+import com.gavindon.mvvm_kotlin.repository.MainRepository
 import com.gavindon.mvvm_lib.base.MVVMBaseViewModel
-import com.gavindon.mvvm_lib.net.*
+import com.gavindon.mvvm_lib.utils.Parameters
 
 /**
  * description:
@@ -12,13 +12,12 @@ import com.gavindon.mvvm_lib.net.*
  */
 class MainViewModel : MVVMBaseViewModel() {
 
-    private val mainRepostory: MainRepostory = MainRepostory()
+    private val mainRepository: MainRepository = MainRepository()
 
-    fun getLogin(reqParam: List<Pair<String, String>>): MutableLiveData<LoginResp> {
+    fun getLogin(reqParam:Parameters): MutableLiveData<LoginResp> {
         val liveData = MutableLiveData<LoginResp>()
-        mainRepostory.getBanner(reqParam)
-        mainRepostory.getBanner2()
+        mainRepository.getBanner(reqParam){
+            liveData.value = it
+        }
         return liveData
-    }
-
-}
+    }}

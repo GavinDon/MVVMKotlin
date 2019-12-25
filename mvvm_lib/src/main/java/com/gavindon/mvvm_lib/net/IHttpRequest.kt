@@ -1,5 +1,8 @@
 package com.gavindon.mvvm_lib.net
 
+import com.gavindon.mvvm_lib.utils.Parameters
+import com.gavindon.mvvm_lib.utils.onFailed
+import com.gavindon.mvvm_lib.utils.onSuccess
 import io.reactivex.disposables.CompositeDisposable
 
 /**
@@ -8,7 +11,6 @@ import io.reactivex.disposables.CompositeDisposable
  * 实现此接口来进行切换
  * Created by liNan on  2019/12/19 10:19
  */
-typealias Parameters = List<Pair<String, Any?>>
 
 
 interface IHttpRequest {
@@ -19,12 +21,17 @@ interface IHttpRequest {
      * @param url 请求地址
      * @param param 请求参数
      */
-    fun <T : Any> get(url: String, param: Parameters? = null, onCallBack: ISingleRequestCallBack<T>)
+    fun get(url: String, param: Parameters? = null, onSuccess: onSuccess, onFailed: onFailed)
+
+    fun post(url: String, param: Parameters? = null, onSuccess: onSuccess, onFailed: onFailed)
+
+
 
 
 }
 
-interface IFuelHttp : IHttpRequest {}
+interface IFuelHttp : IHttpRequest {
+}
 
 
 

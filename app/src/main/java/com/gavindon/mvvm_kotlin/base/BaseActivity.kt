@@ -25,8 +25,7 @@ abstract class BaseActivity : AppCompatActivity(), IView {
      * 而在kotlin中使用inline配合reified可以使用泛型类型
      */
     inline fun <reified V : MVVMBaseViewModel> getViewModel(): V {
-        val viewModel = ViewModelProviders.of(this).get(V::class.java)
-        return viewModel
+        return ViewModelProviders.of(this).get(V::class.java)
     }
 
 }
