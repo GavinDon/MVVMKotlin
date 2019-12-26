@@ -13,19 +13,18 @@ sealed class Resource<in T> {
          * http请求中发生的error
          * http请求完成发生的error
          */
-        fun create(error: Throwable?) {
-            if (error != null) {
-                //android.system.ErrnoException: connect failed: ENETUNREACH (Network is unreachable)
-            }
+        fun create(error: Throwable?): ErrorSource<Throwable?> {
+            //android.system.ErrnoException: connect failed: ENETUNREACH (Network is unreachable)
+            return ErrorSource(error)
         }
 
         /**
          * 只处理code=0
          */
         fun <T> create(data: BaseResponse<T>?): Resource<T> {
-            if (data == null){
-                return  ErrorSource(data)
-            }else{
+            if (data == null) {
+                return ErrorSource(data)
+            } else {
                 val code = data.code
                 return if (code == 0) {
                     val d = data.data ?: ""
@@ -36,11 +35,12 @@ sealed class Resource<in T> {
                         SuccessSource(data.data)
                     }
                 } else {
-                    ErrorSource(data.data)
+                    ErrorSource(data)
                 }
             }
 
         }
+
 
     }
 

@@ -6,6 +6,6 @@ package com.gavindon.mvvm_lib.base.my_interface
  */
 interface IView {
 
-    fun initData()
+    fun initStateView()
 
 }

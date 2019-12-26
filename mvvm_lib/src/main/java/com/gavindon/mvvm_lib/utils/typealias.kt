@@ -6,5 +6,7 @@ package com.gavindon.mvvm_lib.utils
 
  */
 typealias Parameters = List<Pair<String, Any?>>
+
 typealias onSuccess = (String) -> Unit
 typealias onFailed = (Throwable) -> Unit
+typealias onSuccessT<T> = (T) -> Unit

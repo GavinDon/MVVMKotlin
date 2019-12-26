@@ -8,6 +8,4 @@ import com.gavindon.mvvm_lib.base.my_interface.IView
  */
 abstract class MVVMBaseView : IView {
 
-    override fun initData() {
-    }
 }
