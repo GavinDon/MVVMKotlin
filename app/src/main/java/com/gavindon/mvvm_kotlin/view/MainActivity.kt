@@ -6,6 +6,7 @@ import androidx.lifecycle.Observer
 import com.gavindon.mvvm_kotlin.R
 import com.gavindon.mvvm_kotlin.base.BaseActivity
 import com.gavindon.mvvm_kotlin.viewmodel.MainViewModel
+import com.yanzhenjie.permission.runtime.Permission
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : BaseActivity() {
@@ -16,24 +17,30 @@ class MainActivity : BaseActivity() {
 
     override fun onInit(savedInstanceState: Bundle?) {
         mainViewModel = getViewModel()
-
         reqUserInfo()
     }
 
 
-   private fun reqUserInfo() {
+    private fun reqUserInfo() {
         val reqParam = listOf(
             Pair("loginName", "admin"),
             Pair("password", "123123")
         )
-        mainViewModel.getLogin(reqParam).observe(this, Observer {
-            handlerResponseData(it, { loginResp ->
-                tvMock.text = loginResp.name
-            }, {
-                Log.i("expo", "need retry")
-                this.reqUserInfo()
+        requestPermission(this, Permission.CAMERA, Permission.WRITE_EXTERNAL_STORAGE) {
+            mainViewModel.getLogin(reqParam).observe(this, Observer {
+                handlerResponseData(it, { loginResp ->
+                    tvMock.text = loginResp.name
+                }, {
+                    Log.i("expo", "need retry")
+                    this.reqUserInfo()
+                })
             })
-        })
+        }
     }
+
+    override fun permissionForResult() {
+        reqUserInfo()
+    }
+
 
 }

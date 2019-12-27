@@ -1,6 +1,6 @@
 package com.gavindon.mvvm_kotlin.base
 
-import android.app.Application
+import com.gavindon.mvvm_lib.base.MVVMBaseApplication
 import com.gavindon.mvvm_lib.net.HttpFrame
 import com.gavindon.mvvm_lib.net.HttpManager
 
@@ -8,7 +8,7 @@ import com.gavindon.mvvm_lib.net.HttpManager
  * description:
  * Created by liNan on  2019/12/19 15:25
  */
-class MyApplication : Application() {
+class MyApplication : MVVMBaseApplication() {
 
 
     override fun onCreate() {

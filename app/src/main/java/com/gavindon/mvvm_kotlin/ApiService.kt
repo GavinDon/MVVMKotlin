@@ -7,7 +7,7 @@ package com.gavindon.mvvm_kotlin
 
 object ApiService {
 
-    const val url_login = "postLogin"
+    const val url_login = "postLogins"
     const val url_notice = "system/notice/noticeAllList"
 
 }

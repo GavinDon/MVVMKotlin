@@ -1,5 +1,8 @@
 package com.gavindon.mvvm_lib.net
 
+import com.gavindon.mvvm_lib.base.MVVMBaseApplication
+import org.jetbrains.anko.toast
+
 
 /**
  * description:
@@ -35,7 +38,8 @@ sealed class Resource<in T> {
                         SuccessSource(data.data)
                     }
                 } else {
-                    ErrorSource(data)
+                    CodeNotZero(data.data, data.code, data.msg)
+
                 }
             }
 
@@ -49,23 +53,30 @@ sealed class Resource<in T> {
 data class SuccessSource<T>(val body: T) : Resource<T>()
 class EmptySource<T> : Resource<T>()
 data class ErrorSource<T>(val e: T) : Resource<T>()
+data class CodeNotZero<T>(val body: T, val code: Int, val msg: String?) : Resource<T>() {
+    init {
+        ErrorManager.notZero(code, msg)
+    }
+}
 
 
 class ErrorManager {
 
     companion object {
-        /**
-         * 非0的code
-         */
-        fun CodeNotZero() {
-
+        /*除过code=0的状态*/
+        fun notZero(code: Int, msg: String?) {
+            when (code) {
+                1 -> {
+                    MVVMBaseApplication.appContext.toast(msg ?: "异常状态${code}")
+                }
+            }
         }
 
         /**
-         *
+         *100-500http状态错误
+         * 超时等
          */
         fun httpError() {
-
         }
     }
 }

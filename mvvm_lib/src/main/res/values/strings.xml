@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">mvvm_lib</string>
+    <string name="message_permission_always_failed">该功能需要使用以下权限:\n\n%1$s</string>
+
 </resources>
