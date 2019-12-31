@@ -1,5 +1,7 @@
 package com.gavindon.mvvm_kotlin.base
 
+import android.content.Context
+import com.gavindon.mvvm_lib.base.BindContextViewModelFactory
 import com.gavindon.mvvm_lib.base.MVVMBaseActivity
 import com.gavindon.mvvm_lib.base.MVVMBaseViewModel
 import com.gavindon.mvvm_lib.base.ViewModelProviders
@@ -41,6 +43,14 @@ abstract class BaseActivity : MVVMBaseActivity() {
      */
     inline fun <reified V : MVVMBaseViewModel> getViewModel(): V {
         return ViewModelProviders.of(this).get(V::class.java)
+    }
+
+    /**
+     * 带有context的viewModel
+     */
+    inline fun <reified V : MVVMBaseViewModel> getViewModel(context: Context): V {
+        val factory = BindContextViewModelFactory.getInstance(context)
+        return ViewModelProviders.of(this, factory).get(V::class.java)
     }
 
 }

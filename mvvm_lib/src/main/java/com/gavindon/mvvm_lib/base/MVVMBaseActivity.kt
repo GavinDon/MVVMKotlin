@@ -87,6 +87,10 @@ abstract class MVVMBaseActivity : AppCompatActivity(), IView {
             }.show()
     }
 
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+    }
+
 }
 
 object PermissionCode {
