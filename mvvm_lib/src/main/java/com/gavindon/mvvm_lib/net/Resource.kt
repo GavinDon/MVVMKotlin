@@ -50,9 +50,16 @@ sealed class Resource<in T> {
 
 }
 
+//请求成功且size>=1
 data class SuccessSource<T>(val body: T) : Resource<T>()
+
+//请求成功数据size为0
 class EmptySource<T> : Resource<T>()
-data class ErrorSource<T>(val e: T) : Resource<T>()
+
+//请求过程中发生的错误
+data class ErrorSource<T>(val e: Throwable?) : Resource<T>()
+
+//反参不为约定的0为正常 其他的状态
 data class CodeNotZero<T>(val body: T, val code: Int, val msg: String?) : Resource<T>() {
     init {
         ErrorManager.notZero(code, msg)

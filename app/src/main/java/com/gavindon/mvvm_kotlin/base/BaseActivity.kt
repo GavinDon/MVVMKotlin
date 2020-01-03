@@ -21,7 +21,7 @@ abstract class BaseActivity : MVVMBaseActivity() {
     /**
      * @T 只代表data 不包含code message
      */
-    inline fun <reified T> handlerResponseData(
+    inline fun <reified T>  handlerResponseData(
         resource: Resource<T>,
         onSuccess: onSuccessT<T>,
         onFailed: onFailed

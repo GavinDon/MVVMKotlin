@@ -10,3 +10,5 @@ typealias Parameters = List<Pair<String, Any?>>
 typealias onSuccess = (String) -> Unit
 typealias onFailed = (Throwable) -> Unit
 typealias onSuccessT<T> = (T) -> Unit
+typealias onFailedA = () -> Unit
+

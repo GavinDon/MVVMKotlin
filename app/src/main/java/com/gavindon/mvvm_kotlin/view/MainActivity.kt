@@ -6,8 +6,6 @@ import androidx.lifecycle.Observer
 import com.gavindon.mvvm_kotlin.R
 import com.gavindon.mvvm_kotlin.base.BaseActivity
 import com.gavindon.mvvm_kotlin.viewmodel.MainViewModel
-import com.gavindon.mvvm_lib.widgets.TipDialog
-import com.gavindon.mvvm_lib.widgets.showToast
 import com.yanzhenjie.permission.runtime.Permission
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -20,16 +18,6 @@ class MainActivity : BaseActivity() {
     override fun onInit(savedInstanceState: Bundle?) {
         mainViewModel = getViewModel(this)
         reqUserInfo()
-        TipDialog().builds {
-            title = "title"
-            message = "mesage"
-            confirm {
-
-            }
-        }.show(supportFragmentManager, "")
-        tvMock.setOnClickListener {
-            showToast("hel")
-        }
     }
 
 

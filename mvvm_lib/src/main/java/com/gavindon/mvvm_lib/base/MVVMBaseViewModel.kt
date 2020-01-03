@@ -1,7 +1,7 @@
 package com.gavindon.mvvm_lib.base
 
 import androidx.lifecycle.ViewModel
-import com.gavindon.mvvm_lib.net.http
+import com.gavindon.mvvm_lib.net.IHttpRequest
 
 /**
  * description:
@@ -12,6 +12,6 @@ abstract class MVVMBaseViewModel : ViewModel() {
 
     override fun onCleared() {
         super.onCleared()
-        http?.compositeDisposable?.clear()
+        IHttpRequest.compositeDisposable?.clear()
     }
 }
