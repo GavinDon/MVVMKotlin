@@ -2,6 +2,7 @@ package com.gavindon.mvvm_lib.utils
 
 import com.google.gson.Gson
 import com.google.gson.JsonSyntaxException
+import com.google.gson.stream.MalformedJsonException
 import java.lang.reflect.Type
 
 /**
@@ -18,6 +19,8 @@ class GsonUtil {
             return try {
                 gson.fromJson(str, type)
             } catch (ex: JsonSyntaxException) {
+                null
+            } catch (ex: MalformedJsonException) {
                 null
             }
         }

@@ -1,16 +1,14 @@
 package com.gavindon.mvvm_lib.net
 
-import com.gavindon.mvvm_lib.utils.Parameters
-import com.gavindon.mvvm_lib.utils.onFailed
-import com.gavindon.mvvm_lib.utils.onSuccess
-import com.gavindon.mvvm_lib.utils.onSuccessT
-import com.github.kittinunf.fuel.core.HttpException
+import com.gavindon.mvvm_lib.utils.*
+import com.github.kittinunf.fuel.core.ResponseResultHandler
 import com.github.kittinunf.fuel.gson.gsonDeserializer
 import com.github.kittinunf.fuel.httpGet
 import com.github.kittinunf.fuel.httpPost
 import com.github.kittinunf.fuel.rx.rxResponseObject
 import com.github.kittinunf.fuel.rx.rxResponseString
-import com.google.gson.Gson
+import com.google.gson.JsonParseException
+import com.google.gson.JsonSyntaxException
 import io.reactivex.Single
 import java.lang.reflect.Type
 
@@ -65,15 +63,32 @@ class FuelHttp private constructor() : IFuelHttp {
 
 inline fun <reified T> Single<String>.parse(
     type: Type,
-    crossinline onSuccess: onSuccessT<T>
+    crossinline onSuccess: onSuccessT<T>,
+    crossinline onFailed: onFailed
 ) {
     IHttpRequest.compositeDisposable?.add(this.subscribe({
-        val a = Gson().fromJson<T>(it, type)
-        onSuccess.invoke(a)
-    }, {
-        if (it is HttpException) {
+        val p = GsonUtil.str2Obj<T>(it, type)
+        if (null == p) {
+            onFailed(JsonSyntaxException(""))
+        } else {
+            //成功回调(http成功响应,不管code非0或者data为null)
+            when (val r = Resource.create(p)) {
+                is SuccessSource -> {
+                    onSuccess(p)
+                }
+                is ErrorSource -> {
+                    onFailed(r.e)
+                }
+                is EmptySource -> {
+                    onFailed(JsonSyntaxException(""))
+                }
+            }
+
         }
+    }, {
+        onFailed(it)
     }))
 }
+
 
 

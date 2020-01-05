@@ -18,7 +18,12 @@ class MainViewModel(private val context: Context) : MVVMBaseViewModel() {
 
     fun getLogin(reqParam: Parameters): MutableLiveData<Resource<LoginResp>> {
         val liveData = MutableLiveData<Resource<LoginResp>>()
-        mainRepository.getBanner(reqParam)
+        mainRepository.getBanner(reqParam, {
+            liveData.value = Resource.create(it)
+        }, {
+            liveData.value = Resource.create(it)
+        }
+        )
         return liveData
     }
 }

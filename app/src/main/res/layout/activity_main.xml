@@ -6,14 +6,7 @@
         android:layout_height="match_parent"
         tools:context=".view.MainActivity">
 
-    <com.classic.common.MultipleStatusView
-            android:id="@+id/multiple_status_view"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:emptyView="@layout/custom_empty_view"
-            app:errorView="@layout/custom_error_view"
-            app:loadingView="@layout/custom_loading_view"
-            app:noNetworkView="@layout/custom_no_network_view">
+
 
         <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -29,6 +22,5 @@
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
-    </com.classic.common.MultipleStatusView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

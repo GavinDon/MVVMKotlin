@@ -29,7 +29,7 @@ class MainActivity : BaseActivity() {
         requestPermission(this, Permission.CAMERA, Permission.WRITE_EXTERNAL_STORAGE) {
             mainViewModel.getLogin(reqParam).observe(this, Observer {
                 handlerResponseData(it, { loginResp ->
-                    tvMock.text = loginResp.name
+                    tvMock.text = loginResp?.education
                 }, {
                     Log.i("expo", "need retry")
                     this.reqUserInfo()

@@ -1,14 +1,12 @@
 package com.gavindon.mvvm_kotlin.base
 
 import android.content.Context
+import android.util.Log
 import com.gavindon.mvvm_lib.base.BindContextViewModelFactory
 import com.gavindon.mvvm_lib.base.MVVMBaseActivity
 import com.gavindon.mvvm_lib.base.MVVMBaseViewModel
 import com.gavindon.mvvm_lib.base.ViewModelProviders
-import com.gavindon.mvvm_lib.net.EmptySource
-import com.gavindon.mvvm_lib.net.ErrorSource
-import com.gavindon.mvvm_lib.net.Resource
-import com.gavindon.mvvm_lib.net.SuccessSource
+import com.gavindon.mvvm_lib.net.*
 import com.gavindon.mvvm_lib.utils.onFailed
 import com.gavindon.mvvm_lib.utils.onSuccessT
 
@@ -21,18 +19,22 @@ abstract class BaseActivity : MVVMBaseActivity() {
     /**
      * @T 只代表data 不包含code message
      */
-    inline fun <reified T>  handlerResponseData(
+    inline fun <reified T> handlerResponseData(
         resource: Resource<T>,
         onSuccess: onSuccessT<T>,
         onFailed: onFailed
     ) {
         when (resource) {
             is SuccessSource -> {
-                onSuccess(resource.body)
-            }
-            is EmptySource -> {
+                onSuccess.invoke(resource.body)
+                Log.i("hahah", resource.body.toString())
             }
             is ErrorSource -> {
+                Log.i("hahah", resource.e.localizedMessage)
+            }
+            is CodeNotZero -> {
+                Log.i("hahah", (resource.msg))
+
             }
         }
     }

@@ -1,14 +1,11 @@
 package com.gavindon.mvvm_kotlin.repository
 
-import android.util.Log
 import com.gavindon.mvvm_kotlin.ApiService
 import com.gavindon.mvvm_kotlin.bean.LoginResp
 import com.gavindon.mvvm_lib.base.MVVMBaseModel
-import com.gavindon.mvvm_lib.net.BaseResponse
-import com.gavindon.mvvm_lib.net.http
-import com.gavindon.mvvm_lib.net.parse
-import com.gavindon.mvvm_lib.utils.Parameters
-import com.gavindon.mvvm_lib.utils.genericType
+import com.gavindon.mvvm_lib.net.*
+import com.gavindon.mvvm_lib.utils.*
+import com.google.gson.reflect.TypeToken
 
 /**
  * description:
@@ -16,15 +13,19 @@ import com.gavindon.mvvm_lib.utils.genericType
  */
 class MainRepository : MVVMBaseModel() {
 
-    fun getBanner(
-        param: Parameters
-    ) {
-        val t = genericType<BaseResponse<LoginResp>>()
-        http?.get(ApiService.url_login, param)
-            ?.parse<BaseResponse<LoginResp>>(t) {
-                Log.i("hahah", it.data.name)
-            }
-    }
 
+    fun getBanner(
+        param: List<Pair<String, Any?>>,
+        function: (LoginResp?) -> Unit,
+        onFailed: onFailed
+    ) {
+        val t = object : TypeToken<BaseResponse<LoginResp>>() {}.type
+        http?.get(ApiService.url_login, param)
+            ?.parse<BaseResponse<LoginResp>>(t, { resource ->
+                function(resource.data)
+            }, {
+                onFailed(it)
+            })
+    }
 
 }
