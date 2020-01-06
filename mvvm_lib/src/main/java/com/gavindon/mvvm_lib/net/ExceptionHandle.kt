@@ -1,28 +1,33 @@
 package com.gavindon.mvvm_lib.net
 
+import android.system.ErrnoException
+import com.github.kittinunf.fuel.core.FuelError
 import com.github.kittinunf.fuel.core.HttpException
 import java.net.ConnectException
+import java.net.NoRouteToHostException
 import java.net.SocketTimeoutException
 import java.net.UnknownHostException
 import javax.net.ssl.SSLException
 
 
 /**
- * description:分为
+ * description:异常处理
  * Created by liNan on 2020/1/3 16:03
 
  */
 object ExceptionHandle {
 
-    private const val UNAUTHORIZED = 401
-    private const val FORBIDDEN = 403
-    private const val NOT_FOUND = 404
-    private const val REQUEST_TIMEOUT = 408
-    private const val INTERNAL_SERVER_ERROR = 500
-    private const val SERVICE_UNAVAILABLE = 503
     fun handleException(t: Throwable): AppException {
         val ex: AppException
-        when (t.cause) {
+        //如果是使用了fuelError则需要再获取一次cause
+        var throwable = t.cause
+        throwable = if (throwable is FuelError) {
+            throwable.cause ?: throwable
+        } else {
+            throwable
+        }
+
+        when (throwable) {
             is HttpException -> {
                 ex = AppException(ERROR.NETWORK_ERROR)
             }
@@ -31,20 +36,31 @@ object ExceptionHandle {
                 ex = AppException(ERROR.TIMEOUT_ERROR)
             }
             is ConnectException -> {
+                ////连接服务器超时
                 ex = AppException(ERROR.NETWORK_ERROR)
             }
             is UnknownHostException -> {
+                //未知主机异常
                 ex = AppException(ERROR.TIMEOUT_ERROR)
-
+            }
+            is NoRouteToHostException -> {
+                //无法达到给定ip
+                ex = AppException(ERROR.IP_ERROR)
             }
             is SSLException -> {
+                //https证书出错
                 ex = AppException(ERROR.SSL_ERROR)
+            }
+            is ErrnoException -> {
+                //android.system 系统错误
+                ex = AppException(ERROR.NETWORK_ERROR)
             }
             else -> {
                 ex = AppException(ERROR.UNKNOWN)
             }
         }
         return ex
+
 
     }
 
@@ -90,6 +106,12 @@ enum class ERROR(private val code: Int, private val err: String) {
      * 证书出错
      */
     SSL_ERROR(1004, "证书出错"),
+
+    /**
+     * IP错误不能到达服务器
+     */
+    IP_ERROR(1005, "IP错误不能到达服务器"),
+
 
     /**
      * 连接超时

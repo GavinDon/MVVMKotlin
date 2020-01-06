@@ -4,12 +4,14 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
+import androidx.annotation.IdRes
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.gavindon.mvvm_lib.R
 import com.gavindon.mvvm_lib.base.PermissionCode.cameraCode
 import com.gavindon.mvvm_lib.base.my_interface.IView
+import com.gavindon.mvvm_lib.status.StatusView
 import com.yanzhenjie.permission.AndPermission
 import com.yanzhenjie.permission.runtime.Permission
 
@@ -20,7 +22,9 @@ import com.yanzhenjie.permission.runtime.Permission
 
  */
 abstract class MVVMBaseActivity : AppCompatActivity(), IView {
-
+    val mStatusView: StatusView? by lazy {
+        findViewById<StatusView>(mStatusViewId)
+    }
 
     override fun initStateView() {
     }
@@ -34,6 +38,9 @@ abstract class MVVMBaseActivity : AppCompatActivity(), IView {
 
     @get:LayoutRes
     abstract val layoutId: Int
+
+    @get:IdRes
+    abstract val mStatusViewId: Int
 
     protected abstract fun onInit(savedInstanceState: Bundle?)
 

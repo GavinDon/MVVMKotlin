@@ -1,8 +1,5 @@
 package com.gavindon.mvvm_lib.net
 
-import com.gavindon.mvvm_lib.base.MVVMBaseApplication
-import org.jetbrains.anko.toast
-
 
 /**
  * description:
@@ -32,7 +29,7 @@ sealed class Resource<in T> {
                 return if (d is List<*> && d.size <= 0) {
                     EmptySource()
                 } else {
-                    SuccessSource(data.data)
+                    SuccessSource(data)
                 }
             } else {
                 CodeNotZero(data.data, data.code, data.msg)

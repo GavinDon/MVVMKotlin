@@ -2,6 +2,11 @@ package com.gavindon.mvvm_lib.base
 
 import android.app.Application
 import android.content.Context
+import com.orhanobut.logger.AndroidLogAdapter
+import com.orhanobut.logger.FormatStrategy
+import com.orhanobut.logger.Logger
+import com.orhanobut.logger.PrettyFormatStrategy
+
 
 /**
  * description:
@@ -19,6 +24,12 @@ open class MVVMBaseApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         appContext = this
+        /*LOGGER初始化*/
+        val formatStrategy: FormatStrategy = PrettyFormatStrategy.newBuilder()
+            .showThreadInfo(true)
+            .tag("wyh-logger") // (Optional) Global tag for every log. Default PRETTY_LOGGER
+            .build()
+        Logger.addLogAdapter(AndroidLogAdapter(formatStrategy))
     }
 
 
