@@ -32,7 +32,7 @@ sealed class Resource<in T> {
                     SuccessSource(data)
                 }
             } else {
-                CodeNotZero(data.data, data.code, data.msg)
+                NotZeroSource(data.data, data.code, data.msg)
 
             }
 
@@ -44,7 +44,7 @@ sealed class Resource<in T> {
                 if (data.code == 0) {
                     SuccessSource(data)
                 } else {
-                    CodeNotZero(data.data, data.code, data.msg)
+                    NotZeroSource(data.data, data.code, data.msg)
                 }
             } else {
                 SuccessSource(data)
@@ -65,6 +65,6 @@ class EmptySource<T> : Resource<T>()
 data class ErrorSource<T>(val e: Throwable) : Resource<T>()
 
 //反参不为约定的0为正常 其他的状态
-data class CodeNotZero<T>(val body: T, val code: Int, val msg: String?) : Resource<T>()
+data class NotZeroSource<T>(val body: T, val code: Int, val msg: String?) : Resource<T>()
 
 
