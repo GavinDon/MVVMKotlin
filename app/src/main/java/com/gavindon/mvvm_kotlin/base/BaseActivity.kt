@@ -44,7 +44,7 @@ abstract class BaseActivity : MVVMBaseActivity() {
                     }
                 }
             }
-            is CodeNotZero -> {
+            is NotZeroSource -> {
                 showToast("code != 0")
             }
         }
