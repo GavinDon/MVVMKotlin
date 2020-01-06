@@ -33,7 +33,7 @@ class MainActivity : BaseActivity() {
         ) {
             mainViewModel.getLogin(reqParam).observe(this, Observer {
                 handlerResponseData(it, { loginResp ->
-                    tvMock.text = loginResp?.education
+                    tvMock.text = loginResp?.data.education
                 }, {
                     showToast("onRetry")
                 })

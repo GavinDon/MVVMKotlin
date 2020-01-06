@@ -21,7 +21,7 @@ sealed class Resource<in T> {
         /**
          * 只处理code=0
          */
-        fun <T> create(data: BaseResponse<T>): Resource<T> {
+        fun <T> createa(data: BaseResponse<T>): Resource<T> {
             val code = data.code
             return if (code == 0) {
                 val d = data.data ?: ""
