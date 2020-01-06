@@ -14,7 +14,7 @@ import com.gavindon.mvvm_lib.R
  * Created by liNan on 2019/12/30 15:08
 
  */
-class ToastUtil private constructor(val context: Context) {
+class ToastUtil private constructor(private val context: Context) {
 
 
     private val toastView: View by lazy {

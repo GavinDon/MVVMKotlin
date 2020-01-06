@@ -1,14 +1,13 @@
 package com.gavindon.mvvm_lib.net
 
 import com.gavindon.mvvm_lib.utils.*
-import com.github.kittinunf.fuel.core.ResponseResultHandler
 import com.github.kittinunf.fuel.gson.gsonDeserializer
 import com.github.kittinunf.fuel.httpGet
 import com.github.kittinunf.fuel.httpPost
 import com.github.kittinunf.fuel.rx.rxResponseObject
 import com.github.kittinunf.fuel.rx.rxResponseString
-import com.google.gson.JsonParseException
 import com.google.gson.JsonSyntaxException
+import com.orhanobut.logger.Logger
 import io.reactivex.Single
 import java.lang.reflect.Type
 
@@ -68,24 +67,17 @@ inline fun <reified T> Single<String>.parse(
 ) {
     IHttpRequest.compositeDisposable?.add(this.subscribe({
         val p = GsonUtil.str2Obj<T>(it, type)
-        if (null == p) {
-            onFailed(JsonSyntaxException(""))
+        if (null != p) {
+            //反参解析正常
+            onSuccess(p)
         } else {
-            //成功回调(http成功响应,不管code非0或者data为null)
-            when (val r = Resource.create(p)) {
-                is SuccessSource -> {
-                    onSuccess(p)
-                }
-                is ErrorSource -> {
-                    onFailed(r.e)
-                }
-                is EmptySource -> {
-                    onFailed(JsonSyntaxException(""))
-                }
-            }
-
+            //如果返回解析数据为null则代表json解析异常
+            onFailed(JsonSyntaxException("json异常"))
         }
+        Logger.json(it)
+
     }, {
+        Logger.e(it, "网络请求")
         onFailed(it)
     }))
 }

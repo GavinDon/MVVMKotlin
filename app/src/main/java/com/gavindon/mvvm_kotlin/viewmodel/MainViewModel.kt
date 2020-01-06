@@ -1,6 +1,8 @@
 package com.gavindon.mvvm_kotlin.viewmodel
 
-import android.content.Context
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.LifecycleRegistry
 import androidx.lifecycle.MutableLiveData
 import com.gavindon.mvvm_kotlin.bean.LoginResp
 import com.gavindon.mvvm_kotlin.repository.MainRepository
@@ -12,9 +14,10 @@ import com.gavindon.mvvm_lib.utils.Parameters
  * description:
  * Created by liNan on  2019/12/17 14:28
  */
-class MainViewModel(private val context: Context) : MVVMBaseViewModel() {
+class MainViewModel : MVVMBaseViewModel(), LifecycleOwner {
 
     private val mainRepository: MainRepository = MainRepository()
+    private val lifecycleRegistry = LifecycleRegistry(this)
 
     fun getLogin(reqParam: Parameters): MutableLiveData<Resource<LoginResp>> {
         val liveData = MutableLiveData<Resource<LoginResp>>()
@@ -25,6 +28,10 @@ class MainViewModel(private val context: Context) : MVVMBaseViewModel() {
         }
         )
         return liveData
+    }
+
+    override fun getLifecycle(): Lifecycle {
+        return lifecycleRegistry
     }
 }
 

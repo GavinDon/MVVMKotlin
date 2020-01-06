@@ -41,7 +41,6 @@ dependencies {
     api "com.github.kittinunf.fuel:fuel:2.2.0"
     api "com.github.kittinunf.fuel:fuel-rxjava:2.2.0"
     api "com.github.kittinunf.fuel:fuel-gson:2.2.0"
-    implementation 'com.github.kittinunf.result:result:2.2.0' //for jvm
     api 'com.google.code.gson:gson:2.8.6'
     api 'com.alibaba:fastjson:1.1.71.android'
 
@@ -49,7 +48,9 @@ dependencies {
     api 'io.reactivex.rxjava2:rxjava:2.2.8'
     api 'io.reactivex.rxjava2:rxandroid:2.1.0'
 
-    api 'com.yanzhenjie:permission:2.0.3'
+    implementation 'com.yanzhenjie:permission:2.0.3'
+    api 'com.orhanobut:logger:2.2.0'
+
 
 }
 repositories {

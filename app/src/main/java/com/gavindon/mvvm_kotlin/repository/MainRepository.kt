@@ -3,8 +3,10 @@ package com.gavindon.mvvm_kotlin.repository
 import com.gavindon.mvvm_kotlin.ApiService
 import com.gavindon.mvvm_kotlin.bean.LoginResp
 import com.gavindon.mvvm_lib.base.MVVMBaseModel
-import com.gavindon.mvvm_lib.net.*
-import com.gavindon.mvvm_lib.utils.*
+import com.gavindon.mvvm_lib.net.BaseResponse
+import com.gavindon.mvvm_lib.net.http
+import com.gavindon.mvvm_lib.net.parse
+import com.gavindon.mvvm_lib.utils.onFailed
 import com.google.gson.reflect.TypeToken
 
 /**
@@ -16,13 +18,13 @@ class MainRepository : MVVMBaseModel() {
 
     fun getBanner(
         param: List<Pair<String, Any?>>,
-        function: (LoginResp?) -> Unit,
+        function: (BaseResponse<LoginResp>) -> Unit,
         onFailed: onFailed
     ) {
         val t = object : TypeToken<BaseResponse<LoginResp>>() {}.type
         http?.get(ApiService.url_login, param)
             ?.parse<BaseResponse<LoginResp>>(t, { resource ->
-                function(resource.data)
+                function(resource)
             }, {
                 onFailed(it)
             })
